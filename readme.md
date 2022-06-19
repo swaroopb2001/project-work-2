@@ -1,0 +1,1 @@
+initial commit: boilerplate code with basic react app and django app. Client folder contains frontend react code and MainApp is the django app.. no route handlers set up yet
