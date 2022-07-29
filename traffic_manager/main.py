@@ -24,19 +24,26 @@ mysql = MySQL(app)
 def index():
     return jsonify('hello world')
 
-@app.route('/offences/insert/<id>/<type>/<fine>')
-def offIns(id, type, fine):
+@app.route('/offences/new', method='POST')
+def offIns():
+    data=request.get_json()
+    dlno=data.get('dlno')
+    name=data.get('name')
+    location=data.get('location')
+    Type=data.get('type')
+    fine=data.get('fine')
     cursor = mysql.connection.cursor()
-    cursor.execute(''' INSERT INTO offences VALUES(%s,%s,%s)''',(id,type,fine))
+    cursor.execute(''' INSERT INTO offences VALUES(%s,%s,%s,%s,%s)''',(dlno,name,location,Type,fine))
     mysql.connection.commit()
-    return jsonify("Inserted!")
+    return jsonify("success"), 200
 
 @app.route('/offences/all')
 def offences():
     cursor = mysql.connection.cursor()
     cursor.execute(''' SELECT * FROM offences''')
     details = cursor.fetchall()
-    return jsonify(details)
+    return jsonify(details),200
+    
 
 @app.route('/offences/del/<id>')
 def offDel(id):
