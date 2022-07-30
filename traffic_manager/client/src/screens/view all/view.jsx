@@ -3,13 +3,8 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
 function ViewAll() {
-  const [offData, setData] = useState([{}])
-  /*useEffect(() => {
-    fetch('http://localhost:5000/offences/all').then(
-      response => response.json()
-    ).then(data => setData(data.myData))
-  });
-  */
+  const [offData, setData] = useState([])
+  
 
   axios({
     method: "GET",
@@ -43,18 +38,6 @@ function ViewAll() {
     </div>
   )
 
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
-function ViewAll() {
-  const [all,setAll] = useState('cri')
-  useEffect(()=>{
-    axios.get('all').then(res=> setAll(res.data))
-    
-  })
- return(
-  <h1>hi {all}</h1>
- )
-
-}
+        }
 
 export default ViewAll

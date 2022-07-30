@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
- import axios from './axios'
-import ViewAll from './screens/view all/view';
+
+
 
 
 import Navbar from './components/navbar/navbar';
@@ -12,7 +12,7 @@ import FooterComp from './components/footer/footer';
 import ViewAll from './screens/view all/view';
 
 
-import FooterComp from './components/footer/footer'
+
 import AddScr from './screens/addEntry/add';
 import LoginPage from './login';
 
