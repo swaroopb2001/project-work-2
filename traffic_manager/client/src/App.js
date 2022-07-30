@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
  import axios from './axios'
+
+
+
 import Navbar from './components/navbar/navbar';
 import Landing from './screens/landing/landing';
 import FooterComp from './components/footer/footer'
@@ -15,10 +18,13 @@ if(isloggedin) {
   return (
 
     <BrowserRouter>
+    
     <Navbar />
     <Routes>
       <Route path='/' element={<Landing />} />
+
       <Route path='/add' element={<AddScr />} /> 
+
     </Routes>
     <FooterComp />
     </BrowserRouter>
