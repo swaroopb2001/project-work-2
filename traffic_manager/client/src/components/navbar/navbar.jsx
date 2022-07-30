@@ -1,7 +1,7 @@
 import React from 'react'
-import { useContext,useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import isLoggedin from '../../isloggedin'
+
 import HomeIcon from '@mui/icons-material/Home';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
@@ -10,9 +10,9 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 import './navbar.css'
 function Navbar() {
   const [tab,setTab]= useState(window.location.pathname)
-  const{success}= useContext(isLoggedin)
+  
   return (
-    <div className={`${success?'navbar':'none'}`}> 
+    <div className='navbar'> 
       <Link to={'/'} onClick={()=>{setTab('/')}} >
         {tab==='/'?<HomeIcon fontSize='large' style={{color: 'black'}} />: <HomeOutlinedIcon fontSize='large' />}
        
