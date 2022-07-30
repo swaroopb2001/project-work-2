@@ -1,4 +1,5 @@
 #app imports
+import json
 from flask import Flask, request, jsonify
 from flask_mysqldb import MySQL 
 
@@ -20,6 +21,12 @@ app.config['MYSQL_DB'] = ''
 @app.route('/')
 def index():
     return jsonify('hello world')
+  
+@app.route('/hello')
+def hello():
+   name= request.get_json()
+   data=name.get('name')
+   return jsonify(data),200
 
 #app run config
 app.run(host='localhost', port= 5000)
