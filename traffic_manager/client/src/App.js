@@ -15,7 +15,7 @@ import ViewAll from './screens/view all/view';
 
 import AddScr from './screens/addEntry/add';
 import LoginPage from './login';
-
+import Edit from './screens/edit/edit';
 function App() {
   //will check if user is logged in (need to imp backend auth)
   const [isloggedin, setIsloggedin]= useState(true) 
@@ -33,6 +33,7 @@ if(isloggedin) {
       <Route path='/add' element={<AddScr />} /> 
 
       <Route path='/all' element={<ViewAll />} />
+      <Route path='/edit/:id' element={<Edit />} />
     </Routes>
     <FooterComp />
     </BrowserRouter>
