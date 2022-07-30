@@ -1,5 +1,7 @@
 #app imports
 import json
+import math
+import random
 from flask import Flask, request, jsonify
 from flask_mysqldb import MySQL 
 
@@ -31,7 +33,7 @@ def hello():
    data=name.get('name')
    return jsonify(data),200
 
-@app.route('/offences/new')
+@app.route('/offences/new',methods=["POST"])
 def offIns():
     data=request.get_json()
     dlno=data.get('dlno')
@@ -59,15 +61,16 @@ def offDel(id):
     mysql.connection.commit()
     return jsonify("Deleted!")
 
-@app.route('/all')
+@app.route('/all',methods=["GET"])
 def all():
     cursor = mysql.connection.cursor()
     cursor.execute(''' SELECT * FROM demotable''')
     details = cursor.fetchall()
     cursor.close()
     
+    
         
-
+    
     return jsonify(details)
   
 

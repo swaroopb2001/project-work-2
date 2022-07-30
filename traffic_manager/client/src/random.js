@@ -1,4 +1,4 @@
 const Random= ()=>{
-    return Math.floor(Math.random() * 10000000)
+    return ('2022KAR'+Math.floor(Math.random()*10000))
 }
 export default Random

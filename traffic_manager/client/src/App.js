@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
  import axios from './axios'
-
+import ViewAll from './screens/view all/view';
 
 
 import Navbar from './components/navbar/navbar';
@@ -24,7 +24,7 @@ if(isloggedin) {
       <Route path='/' element={<Landing />} />
 
       <Route path='/add' element={<AddScr />} /> 
-
+      <Route path='/all' element={<ViewAll />} />
     </Routes>
     <FooterComp />
     </BrowserRouter>

@@ -32,3 +32,19 @@ height: 100vh;
     font-size: large;
     margin-left: 0.5rem;
 }
+.btn--{
+    width: max-content;
+    align-self: center;
+    margin-top: 1rem;
+    padding: 5px;
+    border-radius: 12px;
+    border: none;
+    background-color: blue;
+    color: white;
+    font-size: large;
+}
+.btn--:hover{
+    transform: scale(1.02);
+    transition-delay: 1s;
+    
+}
