@@ -1,5 +1,4 @@
 #app imports
-import json
 from flask import Flask, request, jsonify
 from flask_mysqldb import MySQL 
 
@@ -10,8 +9,8 @@ app=Flask(__name__)
 #DB config 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'root123'
-app.config['MYSQL_DB'] = 'demo'
+app.config['MYSQL_PASSWORD'] = 'password'
+app.config['MYSQL_DB'] = 'database'
   
   #SAMPLE MYSQL QUERY SNIPPET
 #    cursor = mysql.connection.cursor()
@@ -24,6 +23,7 @@ mysql = MySQL(app)
 @app.route('/')
 def index():
     return jsonify('hello world')
+
 
 @app.route('/offences/new')
 def offIns():
@@ -38,7 +38,14 @@ def offIns():
     mysql.connection.commit()
     return jsonify("success"), 200
 
-@app.route('/offences/all')
+@app.route('/offences/insert/<id>/<type>/<fine>')
+def insPar(id, type, fine):
+    cursor = mysql.connection.cursor()
+    cursor.execute(''' INSERT INTO offences VALUES(%s,%s,%s)''',(id, type, fine))
+    mysql.connection.commit()
+    return jsonify("Inserted!")
+
+@app.route('/offences/all', methods=['GET'])
 def offences():
     cursor = mysql.connection.cursor()
     cursor.execute(''' SELECT * FROM offences''')
