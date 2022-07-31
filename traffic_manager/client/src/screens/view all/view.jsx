@@ -11,17 +11,30 @@ function ViewAll() {
   useEffect(()=>{
     axios({
       method: "GET",
-      url:"/all",
+      url:"/offences/all",
     })
     .then((response) => {
       const res =response.data
       setData(res)
     })
-  })
+  }, [])
 
+/* 
+  For the requests to work, create table 'commits' in mySQL with exactly these columns:
+  repno (varchar), dlno(varchar), offenceid(varchar), time(date), location(varchar), paid(boolean)
+*/
 
 const searchHandler=()=>{
   //sends a request to fetch data of a driver
+    axios({
+      method: "GET",
+      //Shows all offences when search entry is blank
+      url: ((searchid === '')? 'offences/all' : `offences/search/${searchid}`),
+    })
+    .then((response) => {
+      const res = response.data
+      setData(res)
+    })
 }
 
 
@@ -46,24 +59,17 @@ const searchHandler=()=>{
         <table border="1" className='offence--tables'>
           <tr className='heading'>
             <td>Dl number</td>
-            <td>offence ID</td>
-            <td>Type</td>
-            <td>Offence</td>
+            <td>Time</td>
             <td>Location</td>
-            <td>Fine</td>
             <td>paid</td>
           </tr>
 
           {offData.map((item) => (
             <tr>
-              <td>{item[0]}</td>
-
               <td>{item[1]}</td>
-              <td>{item[2]}</td>
               <td>{item[3]}</td>
               <td>{item[4]}</td>
-              <td>{item[5]}</td>
-              <td>{item[6]} {<Link to={`/edit/${item[1]}`} className='edit--link'> edit</Link>}</td>
+              <td>{item[5]} {<Link to={`/edit/${item[1]}`} className='edit--link'> edit</Link>}</td>
             </tr>
           ))}
 

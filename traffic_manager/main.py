@@ -1,6 +1,5 @@
 #app imports
 
-
 import json
 import math
 import random
@@ -54,25 +53,25 @@ def offIns():
     mysql.connection.commit()
     return jsonify("success"), 200
 
-@app.route('/offences/insert/<id>/<type>/<fine>')
+@app.route('/offences/insert/<repno>/<dlno>/<offenceID>/<time>/<location>/<paid>')
 def insPar(id, type, fine):
     cursor = mysql.connection.cursor()
-    cursor.execute(''' INSERT INTO offences VALUES(%s,%s,%s)''',(id, type, fine))
+    cursor.execute(''' INSERT INTO commmits VALUES(%s,%s,%s,%s,%s,%s)''',(repno,dlno,offenceID,time,location,paid))
     mysql.connection.commit()
     return jsonify("Inserted!")
 
 @app.route('/offences/all', methods=['GET'])
 def offences():
     cursor = mysql.connection.cursor()
-    cursor.execute(''' SELECT * FROM offences''')
+    cursor.execute(''' SELECT * FROM commits''')
     details = cursor.fetchall()
     return jsonify(details),200
     
 
-@app.route('/offences/del/<id>')
+@app.route('/offences/del/<repno>')
 def offDel(id):
     cursor = mysql.connection.cursor()
-    cursor.execute(''' DELETE FROM offences WHERE offenceid=%s''',(id))
+    cursor.execute(''' DELETE FROM commits WHERE repno=%s''',(repno))
     mysql.connection.commit()
     return jsonify("Deleted!")
 
@@ -82,13 +81,14 @@ def all():
     cursor.execute(''' SELECT * FROM demotable''')
     details = cursor.fetchall()
     cursor.close()
-    
-    
-        
-    
     return jsonify(details)
   
-
+@app.route('/offences/search/<dlno>')
+def searchDlno(dlno):
+    cursor = mysql.connection.cursor()
+    cursor.execute(''' SELECT * FROM commits WHERE dlno=%s''',[dlno])
+    details = cursor.fetchall()
+    return jsonify(details)
 
 
 #app run config
