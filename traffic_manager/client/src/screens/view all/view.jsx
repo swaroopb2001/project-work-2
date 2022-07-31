@@ -37,6 +37,25 @@ const searchHandler=()=>{
     })
 }
 
+const removeRow = (repno) => {
+  //sends a request to fetch data of a driver
+  console.log(repno)
+  axios({
+    method: "GET",
+    url: `offences/del/${repno}`,
+  })
+  .then((response) => {
+    console.log(response)
+    axios({
+      method: "GET",
+      url: 'offences/all',
+    })
+    .then((response) => {
+      const res = response.data
+      setData(res)
+    })
+  })
+}
 
   return (
     <> <div className="searchbar">
@@ -69,7 +88,8 @@ const searchHandler=()=>{
               <td>{item[1]}</td>
               <td>{item[3]}</td>
               <td>{item[4]}</td>
-              <td>{item[5]} {<Link to={`/edit/${item[1]}`} className='edit--link'> edit</Link>}</td>
+              {/* <td>{item[5]} {<Link to={`/edit/${item[1]}`} className='edit--link'> edit</Link>}</td> */}
+              <td>{item[5]} <button onClick={() => {removeRow(item[0])}}>delete</button></td>
             </tr>
           ))}
 

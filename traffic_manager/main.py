@@ -6,6 +6,7 @@ import random
 
 from flask import Flask, request, jsonify
 from flask_mysqldb import MySQL 
+from flask_cors import CORS, cross_origin
 
 
 #app config
@@ -14,8 +15,8 @@ app=Flask(__name__)
 #DB config 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'password'
-app.config['MYSQL_DB'] = 'database'
+app.config['MYSQL_PASSWORD'] = 'C@lif0rni@'
+app.config['MYSQL_DB'] = 'sanjith'
   
   #SAMPLE MYSQL QUERY SNIPPET
 #    cursor = mysql.connection.cursor()
@@ -37,26 +38,25 @@ def hello():
 
 
 
-@app.route('/offences/new')
-
-@app.route('/offences/new',methods=["POST"])
-
+@app.route('/offences/new/',methods=["POST"])
+@cross_origin()
 def offIns():
     data=request.get_json()
+    repno=data.get('repno')
     dlno=data.get('dlno')
-    name=data.get('name')
+    offenceid=data.get('offenceid')
     location=data.get('location')
-    Type=data.get('type')
-    fine=data.get('fine')
+    time=data.get('time')
+    paid=data.get('paid')
     cursor = mysql.connection.cursor()
-    cursor.execute(''' INSERT INTO offences VALUES(%s,%s,%s,%s,%s)''',(dlno,name,location,Type,fine))
+    cursor.execute(''' INSERT INTO commits VALUES(%s,%s,%s,%s,%s,%s)''',(repno,dlno,offenceid,time,location,paid))
     mysql.connection.commit()
     return jsonify("success"), 200
 
 @app.route('/offences/insert/<repno>/<dlno>/<offenceID>/<time>/<location>/<paid>')
-def insPar(id, type, fine):
+def insPar(repno,dlno,offenceID,time,location,paid):
     cursor = mysql.connection.cursor()
-    cursor.execute(''' INSERT INTO commmits VALUES(%s,%s,%s,%s,%s,%s)''',(repno,dlno,offenceID,time,location,paid))
+    cursor.execute(''' INSERT INTO commits VALUES(%s,%s,%s,%s,%s,%s)''',(repno,dlno,offenceID,time,location,paid))
     mysql.connection.commit()
     return jsonify("Inserted!")
 
@@ -69,9 +69,9 @@ def offences():
     
 
 @app.route('/offences/del/<repno>')
-def offDel(id):
+def offDel(repno):
     cursor = mysql.connection.cursor()
-    cursor.execute(''' DELETE FROM commits WHERE repno=%s''',(repno))
+    cursor.execute(''' DELETE FROM commits WHERE repno=%s''',[repno])
     mysql.connection.commit()
     return jsonify("Deleted!")
 

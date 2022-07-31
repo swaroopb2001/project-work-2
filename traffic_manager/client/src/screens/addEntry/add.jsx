@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from '../../axios'
 import './add.css'
 import Random from '../../random'
-import { useEffect } from 'react';
+
 function AddScr() {
   const[dlno, setDlno]= useState([])
-  
+  const[offenceid, setOff] = useState([])
   const[name, setName]= useState([])
   const[location, setLocation]= useState([])
   const[Type, setType]= useState([])
@@ -15,9 +15,10 @@ function AddScr() {
   const[reportNo, setReportNo] = useState([])
   useEffect(()=> {
      setReportNo(Random()) 
+     setOff(Random())
   },[])
   
-  const date = d.getDate()+'-'+(d.getMonth()+1)+'-'+d.getFullYear()
+  const date = d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()
 const time=new Date().toLocaleTimeString()
   
 
@@ -25,6 +26,24 @@ const time=new Date().toLocaleTimeString()
     e.preventDefault()
     console.log('done')
 
+    const data = { 
+      repno: reportNo,
+      dlno: dlno,
+      offenceid: offenceid,
+      time: date,
+      location: location,
+      paid: (ispaid == true)? 1 : 0,
+    };
+    console.log('submit');
+    fetch('http://localhost:5000/offences/new/', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      .then(res => res.json())
+      .then(res => console.log(res));
   }
   return (
     <div className='add'>
