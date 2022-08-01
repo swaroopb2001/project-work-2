@@ -30,9 +30,9 @@ const time=new Date().toLocaleTimeString()
       repno: reportNo,
       dlno: dlno,
       offenceid: offenceid,
-      time: date,
+      time:date,
       location: location,
-      paid: (ispaid == true)? 1 : 0,
+      paid: (ispaid === true)? 1 : 0,
     };
     console.log('submit');
     fetch('http://localhost:5000/offences/new/', {
@@ -44,6 +44,12 @@ const time=new Date().toLocaleTimeString()
     })
       .then(res => res.json())
       .then(res => console.log(res));
+      setDlno('')
+      setName('')
+      setLocation('')
+      setFine('')
+      setispaid(null)
+      setType('')
   }
   return (
     <div className='add'>

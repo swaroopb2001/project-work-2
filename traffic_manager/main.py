@@ -13,15 +13,12 @@ from flask_cors import CORS, cross_origin
 app=Flask(__name__)
 
 #DB config 
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'C@lif0rni@'
-app.config['MYSQL_DB'] = 'sanjith'
+app.config['MYSQL_HOST'] = 'database-2.c8hjebd9wtea.ap-south-1.rds.amazonaws.com'
+app.config['MYSQL_USER'] = 'admin'
+app.config['MYSQL_PASSWORD'] = 'Admin123'
+app.config['MYSQL_DB'] = 'traffic_manager' 
   
-  #SAMPLE MYSQL QUERY SNIPPET
-#    cursor = mysql.connection.cursor()
-        # cursor.execute(''' INSERT INTO info_table VALUES(%s,%s)''',(name,age))
-        # mysql.connection.commit()
+
 
 mysql = MySQL(app)
 
@@ -53,12 +50,12 @@ def offIns():
     mysql.connection.commit()
     return jsonify("success"), 200
 
-@app.route('/offences/insert/<repno>/<dlno>/<offenceID>/<time>/<location>/<paid>')
-def insPar(repno,dlno,offenceID,time,location,paid):
-    cursor = mysql.connection.cursor()
-    cursor.execute(''' INSERT INTO commits VALUES(%s,%s,%s,%s,%s,%s)''',(repno,dlno,offenceID,time,location,paid))
-    mysql.connection.commit()
-    return jsonify("Inserted!")
+#@app.route('/offences/insert/<repno>/<dlno>/<offenceID>/<time>/<location>/<paid>')
+#def insPar(repno,dlno,offenceID,time,location,paid):
+   # cursor = mysql.connection.cursor()
+    #cursor.execute(''' INSERT INTO commits VALUES(%s,%s,%s,%s,%s,%s)''',(repno,dlno,offenceID,time,location,paid))
+   # mysql.connection.commit()
+    #return jsonify("Inserted!")
 
 @app.route('/offences/all', methods=['GET'])
 def offences():
@@ -75,13 +72,7 @@ def offDel(repno):
     mysql.connection.commit()
     return jsonify("Deleted!")
 
-@app.route('/all',methods=["GET"])
-def all():
-    cursor = mysql.connection.cursor()
-    cursor.execute(''' SELECT * FROM demotable''')
-    details = cursor.fetchall()
-    cursor.close()
-    return jsonify(details)
+
   
 @app.route('/offences/search/<dlno>')
 def searchDlno(dlno):

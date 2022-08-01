@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import './view.css'
-import { Link } from 'react-router-dom'
+
 import { IconButton, List, TextField } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search';
 function ViewAll() {
@@ -33,6 +33,7 @@ const searchHandler=()=>{
     })
     .then((response) => {
       const res = response.data
+      if(!res) alert('not found!')
       setData(res)
     })
 }

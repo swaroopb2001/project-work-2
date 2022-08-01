@@ -6,9 +6,12 @@ basic database connection code added (to be updated once actual db is made)
 run cmd:   
 python main.py  
 
-For the requests to work, create table 'commits' in mySQL with exactly these columns:
-repno (varchar), dlno(varchar), offenceid(varchar), time(date), location(varchar), paid(boolean)
+aws rds hostname: database-2.c8hjebd9wtea.ap-south-1.rds.amazonaws.com  
+user: admin  
+password: Admin123  
   
-create table commits(repno varchar(30), dlno varchar(30), offenceid varchar(30), time date, location varchar(30), paid boolean); 
+to access database on your system:  
+open mysql workbench -> new connection -> enter hostname, username and password -> test connection  
+database name: traffic_manager  
+tables: to be created ( as of 01-08-2022 4:20 PM)
 
-Also update the mySQL password and database in the file 'main.py'  
