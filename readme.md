@@ -9,4 +9,6 @@ python main.py
 For the requests to work, create table 'commits' in mySQL with exactly these columns:
 repno (varchar), dlno(varchar), offenceid(varchar), time(date), location(varchar), paid(boolean)
   
+create table commits(repno varchar(30), dlno varchar(30), offenceid varchar(30), time date, location varchar(30), paid boolean); 
+
 Also update the mySQL password and database in the file 'main.py'  
