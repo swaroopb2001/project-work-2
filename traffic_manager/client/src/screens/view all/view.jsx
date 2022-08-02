@@ -79,18 +79,24 @@ const removeRow = (repno) => {
         <table border="1" className='offence--tables'>
           <tr className='heading'>
             <td>Dl number</td>
+            <td>Name</td>
+            <td>Offence Type</td>
             <td>Time</td>
             <td>Location</td>
-            <td>paid</td>
+            <td>Fine</td>
+            <td>Paid</td>
           </tr>
 
           {offData.map((item) => (
             <tr>
+              <td>{item[0]}</td>
               <td>{item[1]}</td>
+              <td>{item[2]}</td>
               <td>{item[3]}</td>
               <td>{item[4]}</td>
+              <td>{item[5]}</td>
               {/* <td>{item[5]} {<Link to={`/edit/${item[1]}`} className='edit--link'> edit</Link>}</td> */}
-              <td>{item[5]} <button onClick={() => {removeRow(item[0])}}>delete</button></td>
+              <td>{item[6]} <button onClick={() => {removeRow(item[7])}}>delete</button></td>
             </tr>
           ))}
 

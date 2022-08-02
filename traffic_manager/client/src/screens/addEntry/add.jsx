@@ -5,7 +5,7 @@ import Random from '../../random'
 
 function AddScr() {
   const[dlno, setDlno]= useState([])
-  const[offenceid, setOff] = useState([])
+  const[offenceid, setOff] = useState('')
   const[name, setName]= useState([])
   const[location, setLocation]= useState([])
   const[Type, setType]= useState([])
@@ -14,17 +14,40 @@ function AddScr() {
   const d= new Date()
   const[reportNo, setReportNo] = useState([])
   useEffect(()=> {
-     setReportNo(Random()) 
-     setOff(Random())
+     setReportNo(Random())
   },[])
   
   const date = d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()
 const time=new Date().toLocaleTimeString()
   
+  const changeTypeId = (txt) => {
+    setType(txt)
+
+    axios({
+      method: "GET",
+      url: `http://localhost:5000/offences/getOffenceID/${Type}`,
+    }).then((response) => {
+      const res = response.data
+      setOff(res)
+      console.log("hello")
+    }).catch(err => {
+      // Handle error
+      console.log(err);
+  })
+  } 
 
   const submitHandler=(e)=>{
     e.preventDefault()
     console.log('done')
+
+    axios({
+      method: "GET",
+      url: `http://localhost:5000/offences/getOffenceID/${Type}`,
+    }).then((response) => {
+      const res = response.data
+      setOff(res[0][0])
+      console.log(res[0][0])
+    })
 
     const data = { 
       repno: reportNo,

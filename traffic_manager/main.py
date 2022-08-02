@@ -11,6 +11,7 @@ from flask_cors import CORS, cross_origin
 
 #app config
 app=Flask(__name__)
+CORS(app, support_credentials=True)
 
 #DB config 
 app.config['MYSQL_HOST'] = 'database-2.c8hjebd9wtea.ap-south-1.rds.amazonaws.com'
@@ -36,7 +37,7 @@ def hello():
 
 
 @app.route('/offences/new/',methods=["POST"])
-@cross_origin()
+@cross_origin(supports_credentials=True)
 def offIns():
     data=request.get_json()
     repno=data.get('repno')
@@ -50,17 +51,10 @@ def offIns():
     mysql.connection.commit()
     return jsonify("success"), 200
 
-#@app.route('/offences/insert/<repno>/<dlno>/<offenceID>/<time>/<location>/<paid>')
-#def insPar(repno,dlno,offenceID,time,location,paid):
-   # cursor = mysql.connection.cursor()
-    #cursor.execute(''' INSERT INTO commits VALUES(%s,%s,%s,%s,%s,%s)''',(repno,dlno,offenceID,time,location,paid))
-   # mysql.connection.commit()
-    #return jsonify("Inserted!")
-
 @app.route('/offences/all', methods=['GET'])
 def offences():
     cursor = mysql.connection.cursor()
-    cursor.execute(''' SELECT * FROM commits''')
+    cursor.execute(''' SELECT d.dlno, d._name, o._type, c._time, c.location, o.fine, c.paid, c.repno FROM driver d, commits c, offences o where d.dlno=c.dlno and o.offenceid=c.offenceid''')
     details = cursor.fetchall()
     return jsonify(details),200
     
@@ -77,10 +71,16 @@ def offDel(repno):
 @app.route('/offences/search/<dlno>')
 def searchDlno(dlno):
     cursor = mysql.connection.cursor()
-    cursor.execute(''' SELECT * FROM commits WHERE dlno=%s''',[dlno])
+    cursor.execute(''' SELECT d.dlno, d._name, o._type, c._time, c.location, o.fine, c.paid, c.repno FROM driver d, commits c, offences o WHERE d.dlno=c.dlno and o.offenceid=c.offenceid and d.dlno=%s''',[dlno])
     details = cursor.fetchall()
     return jsonify(details)
 
+@app.route('/offences/getOffenceID/<type>')
+def getOffenceID(type):
+    cursor = mysql.connection.cursor()
+    cursor.execute(''' SELECT offenceid FROM offences WHERE _type=%s''',[type])
+    details = cursor.fetchall()
+    return jsonify(details)
 
 #app run config
 app.run(host='localhost', port= 5000)
