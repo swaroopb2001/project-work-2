@@ -13,5 +13,5 @@ password: Admin123
 to access database on your system:  
 open mysql workbench -> new connection -> enter hostname, username and password -> test connection  
 database name: traffic_manager  
-tables: to be created ( as of 01-08-2022 4:20 PM)
+
 
