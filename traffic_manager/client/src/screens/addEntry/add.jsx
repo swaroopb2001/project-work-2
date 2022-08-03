@@ -20,22 +20,9 @@ function AddScr() {
   const date = d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()
 const time=new Date().toLocaleTimeString()
   
-  const changeTypeId = (txt) => {
-    setType(txt)
+  
 
-    axios({
-      method: "GET",
-      url: `http://localhost:5000/offences/getOffenceID/${Type}`,
-    }).then((response) => {
-      const res = response.data
-      setOff(res)
-      console.log("hello")
-    }).catch(err => {
-      // Handle error
-      console.log(err);
-  })
-  } 
-
+  
   const submitHandler=(e)=>{
     e.preventDefault()
     console.log('done')
