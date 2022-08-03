@@ -23,17 +23,18 @@ const time=new Date().toLocaleTimeString()
   
 
   
-  const submitHandler=(e)=>{
+  const submitHandler=async(e)=>{
     e.preventDefault()
     console.log('done')
 
-    axios({
+   await axios({
       method: "GET",
       url: `http://localhost:5000/offences/getOffenceID/${Type}`,
     }).then((response) => {
       const res = response.data
-      setOff(res[0][0])
-      console.log(res[0][0])
+      setOff(res)
+      
+      console.log(res)
     })
 
     const data = { 
