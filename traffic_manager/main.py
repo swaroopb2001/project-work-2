@@ -61,7 +61,7 @@ def login():
         return jsonify({'message':'invalid credentials'}),403
     if password=='admin123' and username=='admin':
         token=jwt.encode({'user':'admin','exp':datetime.datetime.utcnow()+datetime.timedelta(days=30)}, app.config['SECRET_KEY'])
-        return jsonify({'token': token}),200
+        return jsonify({user:'admin','token': token}),200
     else:
         return jsonify({'message':'invalid credentials'}),403
     
@@ -77,13 +77,10 @@ def all():
     except:
         return jsonify({'error':'database error'}),500
     
-@app.route('/test')
-
-def test():
-    cursor = mysql.connection.cursor()
-    cursor.execute(''' select * from sample''')
-    details = cursor.fetchall()
-    return jsonify( details),200
+@app.route('/isloggedin')
+@authenticate
+def isAuth():
+    return jsonify({'user':'admin'}),200
     
 
 

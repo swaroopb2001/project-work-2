@@ -1,10 +1,10 @@
 import React from 'react'
 import './login.css'
-function LoginPage({isloggedin, setIsloggedin}) {
+function LoginPage() {
   return (
     <div>LoginPage
          
-        <button onClick={()=>{setIsloggedin(true)}}>login</button>
+        
         
     </div>
   )
