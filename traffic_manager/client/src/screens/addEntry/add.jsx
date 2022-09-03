@@ -34,7 +34,7 @@ const time=new Date().toLocaleTimeString()
       const res = response.data
       setOff(res)
       
-      console.log(res)
+      console.log(res[0])
     })
 
     const data = { 

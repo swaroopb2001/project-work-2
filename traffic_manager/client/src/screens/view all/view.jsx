@@ -78,6 +78,7 @@ const removeRow = (repno) => {
   </div><div className='cnt'>
         <table border="1" className='offence--tables'>
           <tr className='heading'>
+          <td>Report Number</td>
             <td>Dl number</td>
             <td>Name</td>
             <td>Offence Type</td>
@@ -95,6 +96,7 @@ const removeRow = (repno) => {
               <td>{item[3]}</td>
               <td>{item[4]}</td>
               <td>{item[5]}</td>
+              <td>{item[6]}</td>
               {/* <td>{item[5]} {<Link to={`/edit/${item[1]}`} className='edit--link'> edit</Link>}</td> */}
               <td>{item[6]} <button onClick={() => {removeRow(item[7])}}>delete</button></td>
             </tr>
