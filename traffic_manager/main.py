@@ -5,6 +5,7 @@
 from datetime import datetime
 from functools import wraps
 import json
+from lib2to3.pgen2 import token
 import jwt
 import datetime
 
@@ -29,19 +30,7 @@ app.config['MYSQL_DB'] = 'TrafficDb'
 
 mysql = MySQL(app)
 
-#auth middleware
-def authenticate(f):
-    @wraps(f)
-    def wrapped(*args, **kwargs):
-        token = request.headers['authorization']
-        if not token:
-            return jsonify({'message':'missing token'}),403
-        try:
-            data=jwt.decode(token, app.config['SECRET_KEY'])
-        except:
-            return jsonify({'message':'invalid token'}),403
-        return f(*args,**kwargs)
-    return wrapped
+
         
 
 
@@ -50,7 +39,8 @@ def authenticate(f):
 def index():
     return jsonify('hello world')
 
-@app.route('/login')
+@app.route('/login',methods=['POST'])
+@cross_origin(supports_credentials=True)
 def login():
     data=request.get_json()
     
@@ -61,12 +51,11 @@ def login():
         return jsonify({'message':'invalid credentials'}),403
     if password=='admin123' and username=='admin':
         token=jwt.encode({'user':'admin','exp':datetime.datetime.utcnow()+datetime.timedelta(days=30)}, app.config['SECRET_KEY'])
-        return jsonify({user:'admin','token': token}),200
+        return jsonify({'user':'admin','token': token}),200
     else:
         return jsonify({'message':'invalid credentials'}),403
     
 @app.route('/offences/all')
-@authenticate
 def all():
     try:
         cursor = mysql.connection.cursor()
@@ -77,10 +66,14 @@ def all():
     except:
         return jsonify({'error':'database error'}),500
     
-@app.route('/isloggedin')
-@authenticate
-def isAuth():
-    return jsonify({'user':'admin'}),200
+@app.route('/isloggedin', methods=['POST'])
+def isauth():
+    data=request.get_json()
+    token= data.get('token')
+    if token:
+        return jsonify({'success':True,'data':'admin'}),200
+    else:
+        return jsonify({'success':False}),403
     
 
 

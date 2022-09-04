@@ -31,5 +31,18 @@ export const userreducer= createReducer(initialState,{
         state.loading= false
         state.error= action.payload
         state.isAuthenticated= false
+    },
+    logoutRequest:(state)=>{
+        state.loading=true
+    },
+    logoutSuccess: (state)=>{
+        state.loading= false
+        state.isAuthenticated=false
+        state.user=null
+    },
+    logoutFailure:(state,action)=>{
+    state.loading= false
+    state.error= action.payload
+    state.user=null
     }
 })

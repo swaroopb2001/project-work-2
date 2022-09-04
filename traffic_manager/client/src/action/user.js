@@ -1,3 +1,4 @@
+
 import Axios from '../axios'
 export const loginUser= (username,password)=> async(dispatch)=>{
     try {
@@ -5,9 +6,9 @@ export const loginUser= (username,password)=> async(dispatch)=>{
             type:'loginRequest'
         })
 
-        const {user,token}= await Axios.get('/login',{
-            username: username,
-            password:password 
+        const response= await Axios.post('/login',{
+           username: username,
+           password: password
         },{
             Headers:{
                 'Content-Type':'application/json',
@@ -15,17 +16,17 @@ export const loginUser= (username,password)=> async(dispatch)=>{
             },
             
         })
-        localStorage.setItem('token', token)
+        localStorage.setItem('token', response.data.token)
 
         dispatch({
             type:'loginSuccess',
-            payload:user
+            payload:response.data.user
         })
         
     } catch (error) {
         dispatch({
             type:'loginFailure',
-            payload: error
+            payload: error.message
         })
     }
 
@@ -39,21 +40,45 @@ export const loadUser=()=>async (dispatch)=>{
             type: 'loadUserRequest'
         })
 
-        const {user}= await Axios.get('/isloggedin',{
-            headers:{
-                'authorization': `${localStorage.getItem('token')}`
-            }
+        const response= await Axios.post('/isloggedin',{
+           token: `${localStorage.getItem('token')}`
+        },{
+            Headers:{
+                'Content-Type':'application/json',
+                
+            },
+            
         })
 
         dispatch({
             type: 'loadUserSuccess',
-            payload: user
+            payload: response.data
         })
 
     } catch (error) {
         dispatch({
             type:'loadUserFailure',
-            payload: error
+            payload: error.message
         })
     }
+}
+
+export const logoutUser=()=> async(dispatch)=>{
+
+   try {
+    dispatch({
+        type:'logoutRequest'
+    })
+
+    localStorage.removeItem('token')
+    dispatch({
+        type:'logoutSuccess'
+    })
+    
+   } catch (error) {
+    dispatch({
+        type:'logoutFailure',
+        payload: error
+    })
+   }
 }
