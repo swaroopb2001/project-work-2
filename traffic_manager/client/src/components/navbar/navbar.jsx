@@ -15,7 +15,9 @@ function Navbar() {
   const [tab,setTab]= useState(window.location.pathname)
   const dispatch= useDispatch()
   const handlelogout=()=>{
+    if (window.confirm('are you sure you want to logout?')==true)
     dispatch(logoutUser())
+    
   }
   return (
     <div className='navbar'> 
@@ -33,7 +35,7 @@ function Navbar() {
         {tab==='/add'?<AddBoxIcon fontSize='large' style={{color: 'black'}} />: <AddBoxOutlinedIcon fontSize='large' />}
        
             </Link>
-            <Button onClick={handlelogout}>logout</Button>
+            <Button onClick={handlelogout} style={{color: 'black'}} >logout</Button>
 
     </div>
   )

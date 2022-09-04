@@ -13,9 +13,9 @@ function LoginPage() {
   }
   return (
    
-    <div>
+    <div className=''>
       <form action="" method="get">
-      <input type="text" name="username" id="username" placeholder='username' onChange={(e)=>setUsername(e.target.value)} />
+      <input type="text" name="username" id="username" placeholder='username'  onChange={(e)=>setUsername(e.target.value)} />
       <input type="password" name="password" id="password" placeholder='password' onChange={(e)=>setPassword(e.target.value)} />
       <button type="submit" onClick={submithandler}>submit</button>
       </form>
